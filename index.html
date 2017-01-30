@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link href="main.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+      <div id="location">
+      </div>
+      <div class="container-fluid big-box">
+    
+         <div class="row text-center" id="weather-display"><!-- Start #weather-display -->
+              <div class="menu">
+                <div class="row" id="temp-switch"> <!--Start tempSwitch-->
+            <div class="col-xs-12">
+              <label class="switch">
+                <input type="checkbox">
+                <div class="slider">
+                </div>
+              </label>
+              <!---------------Basic toggle slider using JS
+              <div id="temps-slider-holder">
+                <div id="temps-slider">
+                </div>
+              </div>
+      End Basic Toggle Slider HTML for JS-->
+            </div>
+          </div> <!-- End tempSwitch -->
+              </div>
+           <button type="button" class="btn btn-secondary nub">F
+           </button>
+           <div class="col-xs-12 weather-display-wrapper flex-column active-weather" id="now-weather">  <!--Start #now-weather -->
+             <div class="date-box" id=""> <!--Date holder?-->
+             </div>
+             <div class="icon-holder" id="">
+             </div>
+            <div class="info-holders-box">
+               <div class="info-holder fahrenheit active-weather" id="">
+                 <div class="air-temp">
+                 </div>
+               </div>
+               <div class="info-holder celsius" id="">
+                 <div class="air-temp">
+                 </div>
+               </div>
+             </div>
+          </div> <!--End #now-weather -->
+          <div class="col-xs-12 weather-display-wrapper flex-column" id="todays-weather">  <!--Start #today-weather -->
+            <div class="date-box" id=""> <!--Date holder?-->
+            </div>
+            <div class="icon-holder" id="">
+            </div>
+            <div class="info-holders-box">
+              <div class="info-holder fahrenheit active-weather" id="">
+                <div class="max-temp" id="">
+                </div>
+                <div class="min-temp" id="">
+                </div>
+                <div class="precip-percentage" id="">
+                </div>
+              </div>
+              <div class="info-holder celsius" id="">
+                <div class="max-temp" id="">
+                </div>
+                <div class="min-temp" id="">
+                </div>
+                <div class="precip-percentage" id="">
+                </div>
+              </div>
+            </div>
+          </div> <!--End #today-weather -->
+           <div class="col-xs-12 weather-display-wrapper flex-column" id="tomorrows-weather">  <!--Start #tomorrow-weather -->
+            <div class="date-box" id=""> <!--Date holder?-->
+            </div>
+            <div class="icon-holder" id="">
+            </div>
+            <div class="info-holders-box">
+              <div class="info-holder fahrenheit active-weather" id="">
+                <div class="max-temp" id="">
+                </div>
+                <div class="min-temp" id="">
+                </div>
+                <div class="precip-percentage" id="">
+                </div>
+              </div>
+              <div class="info-holder celsius" id="">
+                <div class="max-temp" id="">
+                </div>
+                <div class="min-temp" id="">
+                </div>
+                <div class="precip-percentage" id="">
+                </div>
+              </div>
+             </div>
+          </div> <!--End #tomorrow-weather -->
+          <div class="col-xs-12 weather-display-wrapper" id="forecasts-wrapper">
+            <div class="forecast-holder" id="day-one-forecast">  <!--Start #four-day-forecast -->
+              <div class="date-box" id=""> <!--Date holder?-->
+              </div>
+              <div class="icon-holder" id="">
+              </div>
+              <div class="info-holders-box">
+                <div class="info-holder fahrenheit active-weather" id="">
+                  <div class="max-temp" id="">
+                  </div>
+                  <div class="min-temp" id="">
+                  </div>
+                  <div class="precip-percentage" id="">
+                  </div>
+                </div>
+                <div class="info-holder celsius" id="">
+                  <div class="max-temp" id="">
+                  </div>
+                  <div class="min-temp" id="">
+                  </div>
+                  <div class="precip-percentage" id="">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="forecast-holder" id="day-two-forecast">  <!--Start #four-day-forecast -->
+              <div class="date-box" id=""> <!--Date holder?-->
+              </div>
+              <div class="icon-holder" id="">
+              </div>
+              <div class="info-holders-box">
+                  <div class="info-holder fahrenheit active-weather" id="">
+                    <div class="max-temp" id="">
+                    </div>
+                    <div class="min-temp" id="">
+                    </div>
+                    <div class="precip-percentage" id="">
+                    </div>
+                  </div>
+                  <div class="info-holder celsius" id="">
+                    <div class="max-temp" id="">
+                    </div>
+                    <div class="min-temp" id="">
+                    </div>
+                    <div class="precip-percentage" id="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="forecast-holder" id="day-three-forecast">  <!--Start #four-day-forecast -->
+                <div class="date-box" id=""> <!--Date holder?-->
+                </div>
+                <div class="icon-holder" id="">
+                </div>
+                <div class="info-holders-box">
+                  <div class="info-holder fahrenheit active-weather" id="">
+                    <div class="max-temp" id="">
+                    </div>
+                    <div class="min-temp" id="">
+                    </div>
+                    <div class="precip-percentage" id="">
+                    </div>
+                  </div>
+                  <div class="info-holder celsius" id="">
+                    <div class="max-temp" id="">
+                    </div>
+                    <div class="min-temp" id="">
+                    </div>
+                    <div class="precip-percentage" id="">
+                    </div>
+                  </div>
+              </div>
+            </div>
+              <div class="forecast-holder" id="day-four-forecast">  <!--Start #four-day-forecast -->
+                <div class="date-box" id=""> <!--Date holder?-->
+                </div>
+                <div class="icon-holder" id="">
+                </div>
+                <div class="info-holders-box">
+                  <div class="info-holder fahrenheit active-weather" id="">
+                    <div class="max-temp" id="">
+                    </div>
+                    <div class="min-temp" id="">
+                    </div>
+                    <div class="precip-percentage" id="">
+                    </div>
+                  </div>
+                  <div class="info-holder celsius" id="">
+                    <div class="max-temp" id="">
+                    </div>
+                    <div class="min-temp" id="">
+                    </div>
+                    <div class="precip-percentage" id="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> <!--End #forecast-holder -->
+        </div> <!--End .weather-display-->
+        <div class="row" id="weather-display-buttons"> <!--Start .weather-display-buttons -->
+            <button type="button" class="btn btn-secondary btn-block active-button">Now</button>
+            <button type="button" class="btn btn-secondary btn-block">Today</button>
+            <button type="button" class="btn btn-secondary btn-block">Tomorrow</button>
+            <button type="button" class="btn btn-secondary btn-block">4Days</button>
+        </div> <!--End .weather-display-buttons -->
+      </div> <!-- End .container-fluid -->
+      <a href="https://darksky.net/poweredby/" id="powered-by-dark-sky">Powered by Dark Sky</a>
+      <div id="last-update">
+           </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </body>
+</html>
