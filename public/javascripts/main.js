@@ -1,3 +1,5 @@
+"use strict";
+
 $(document).ready(function() {
   var locationNode = document.getElementById("location");
   var weatherKey = "da122a76ea01514b2d659d12db1b747c";
@@ -276,6 +278,29 @@ function queryDarkSkyAPI() {
     }
     isFahrenheit = !isFahrenheit;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   /**Ignore for now. Supposed to use nub to open menu
   document.querySelector(".nub").addEventListener("click", function() {

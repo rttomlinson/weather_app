@@ -1,0 +1,34 @@
+{
+  "name": "weather_app",
+  "version": "1.0.0",
+  "description": "A weather app",
+  "main": "app.js",
+  "scripts": {
+    "build-css": "./bin/build-css",
+    "watch-css": "./bin/watch-css",
+    "start": "npm run build-css && node ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rttomlinson/weather_app.git"
+  },
+  "keywords": [
+    "weather",
+    "forecast"
+  ],
+  "author": "Renzo Tomlinson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rttomlinson/weather_app/issues"
+  },
+  "homepage": "https://github.com/rttomlinson/weather_app#readme",
+  "devDependencies": {
+    "jasmine": "^2.5.3",
+    "node-sass": "^4.5.0"
+  },
+  "dependencies": {
+    "express": "^4.15.2",
+    "hbs": "^4.0.1"
+  }
+}
