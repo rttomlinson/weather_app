@@ -283,14 +283,14 @@ function addIcon(wrapperObj) {
   		
   		let weatherHolders = Array.from(document.getElementsByClassName("weather-holder"));//clear display class from weather-holders
   		weatherHolders.forEach(function (element, index, arr) {
-  			element.classList.remove('display');
+  			element.classList.remove('active');
   		});
   		
   		let clickedButton = event.target;
   		clickedButton.classList.add('active-button');//Then add the active-button class to the target element
   		let sectionID = clickedButton.dataset.target;//then get the data-target attribute from the element, which is the id of the weather holder
   		let weatherHolder = document.getElementById(sectionID);
-  		weatherHolder.classList.add('display'); //add display to the selected weather holder
+  		weatherHolder.classList.add('active'); //add display to the selected weather holder
   	}
 	//Remove all active-button from all display-button to clean. Then add active to button to the button that was clicked
 	//Relies on display and buttons divs staying in the same order. Very brittle. Need to change.   
