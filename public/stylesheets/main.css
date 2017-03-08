@@ -28,6 +28,14 @@ svg {
 .active {
   display: initial; }
 
+.temps {
+  display: flex;
+  justify-content: space-between; }
+
+/** For the buttons that toggle different displays **/
+.active-button {
+  background-color: #ffeeaa; }
+
 /****** SLIDER CSS **********************/
 /* The switch - the box around the slider */
 .switch {

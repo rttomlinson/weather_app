@@ -27,7 +27,8 @@ $(document).ready(function() {
 	}).
 	then(function onFulfilled([latitude, longitude]) {
 		console.log("calling DarkSkyAPI");
-		return queryDarkSkyAPI(weatherKey, latitude, longitude); //Returns a promise with Query from DarkSkyAPI
+		return queryDarkSkyAPI(weatherKey, latitude, longitude);
+		//Returns a promise with Query from DarkSkyAPI
 	}, function onRejected(error) {
 		throw "Something happened when trying to get coordinates";
 	}).
@@ -39,6 +40,9 @@ $(document).ready(function() {
 		createNowDisplay(nowWrapperInfo);
 		let todaysWrapperInfo = {"id": "todays-weather", "info": weatherObj.daily.data[0]};
 		createTodaysDisplay(todaysWrapperInfo);
+		let tomorrowsWrapperInfo = {"id": "tomorrows-weather", "info": weatherObj.daily.data[1]};
+		createTomorrowsDisplay(tomorrowsWrapperInfo);
+
 		
 		
 		
@@ -188,8 +192,8 @@ function addIcon(wrapperObj) {
     var temp = wrapperObj.info.temperature;
     var fahrenheitTemp = Math.round(temp); //DarkSkyAPI defaults to Fahrenheit
     var celsiusTemp = Math.round(convertToCelsius(temp));
-    document.querySelector("#" + wrapperObj.id + " " + ".fahrenheit" + " " + ".air-temp").innerHTML = fahrenheitTemp + "&#176;" + "F";
-    document.querySelector("#" + wrapperObj.id + " " + ".celsius" + " " + ".air-temp").innerHTML = celsiusTemp + "&#176;" + "C";
+    document.querySelector(`#${wrapperObj.id} .fahrenheit .air-temp`).innerHTML = fahrenheitTemp + "&#176;" + "F";
+    document.querySelector(`#${wrapperObj.id} .celsius .air-temp`).innerHTML = celsiusTemp + "&#176;" + "C";
   }
   /**
  * Gets the todays air temperature max and min for the current day of the location submitted at the time that the weather object was created on the Dark Sky API servers.
@@ -203,10 +207,10 @@ function addIcon(wrapperObj) {
     var tempMin = wrapperObj.info.temperatureMin;
     var tempMinFahrenheit = Math.round(tempMin);
     var tempMinCelsius = Math.round(convertToCelsius(tempMin));
-    document.querySelector("#" + wrapperObj.id + " " + ".fahrenheit" + " " + ".max-temp").innerHTML = tempMaxFahrenheit + "&#176;" + "F"; 
-    document.querySelector("#" + wrapperObj.id + " " + ".fahrenheit" + " " + ".min-temp").innerHTML = tempMinFahrenheit + "&#176;" + "F"; 
-    document.querySelector("#" + wrapperObj.id + " " + ".celsius" + " " + ".max-temp").innerHTML = tempMaxCelsius + "&#176;" + "C"; 
-    document.querySelector("#" + wrapperObj.id + " " + ".celsius" + " " + ".min-temp").innerHTML = tempMinCelsius + "&#176;" + "C";  
+    document.querySelector(`#${wrapperObj.id} .fahrenheit .max-temp`).innerHTML = tempMaxFahrenheit + "&#176;" + "F"; 
+    document.querySelector(`#${wrapperObj.id} .fahrenheit .min-temp`).innerHTML = tempMinFahrenheit + "&#176;" + "F"; 
+    document.querySelector(`#${wrapperObj.id} .celsius .max-temp`).innerHTML = tempMaxCelsius + "&#176;" + "C"; 
+    document.querySelector(`#${wrapperObj.id} .celsius .min-temp`).innerHTML = tempMinCelsius + "&#176;" + "C";  
   }
   
    /**
@@ -215,9 +219,9 @@ function addIcon(wrapperObj) {
  * @return none
  */
   function getPrecipPercentage(wrapperObj) {
-    var precipProbability = (Math.round((wrapperObj.info.precipProbability) * 100)) + "%"; //DarkSkyAPI defaults to Fahrenheit
-    document.querySelectorAll("#" + wrapperObj.id + " " + ".precip-percentage").forEach(function(element) {
-      element.innerHTML = precipProbability; 
+    var precipProbability = "Precip: " + (Math.round((wrapperObj.info.precipProbability) * 100)) + "%"; //DarkSkyAPI defaults to Fahrenheit
+    document.querySelectorAll(`#${wrapperObj.id} .precip-percentage`).forEach(function(element) { //Loop for fahrenheit and for celsius
+    	element.innerHTML = precipProbability;
     });
   }
 
@@ -270,21 +274,20 @@ function addIcon(wrapperObj) {
   /*Add click event listeners to display-buttons
   *
   */
-  document.querySelectorAll("#weather-display-buttons button").forEach(function clickHandler(button, index, nodeList) {
-    var wrappers = document.querySelectorAll(".weather-display-wrapper");
-    button.addEventListener("click", function(event) {
-   //Remove all active-button from all display-button to clean. Then add active to button to the button that was clicked
-      nodeList.forEach(function(button) {
-      button.classList.remove("active-button");
-    });
-      wrappers.forEach(function(wrapper) {
-        wrapper.classList.remove("active-weather");
-      });
-      wrappers[index].classList.add("active-weather"); //Relies on display and buttons divs staying in the same order. Very brittle. Need to change.
-    this.classList.add("active-button");
-  }, false);    
-});
-  
+  document.getElementById("weather-display-buttons").addEventListener("click", function(event) {
+  	if (event.target.tagName === 'BUTTON') {
+  		let buttons = Array.from(event.currentTarget.querySelectorAll('button')); //For each button, remove the active-button class
+  		buttons.forEach(function (element, index, arr) {
+  			element.classList.remove('active-button');
+  		});
+  		event.target.classList.add('active-button');
+  		
+  		//Then add the active-button class to the target element
+  	}
+	//Remove all active-button from all display-button to clean. Then add active to button to the button that was clicked
+	//Relies on display and buttons divs staying in the same order. Very brittle. Need to change.   
+  }, false); 
+   
     /** Toggle between Fahrenheit and Celsius
      *
      *
@@ -602,7 +605,13 @@ tempsSlider.classList.toggle("temps-fahr"); //classList will not work in IE9. Ne
 });
   ----End Toggle button in JS */ 
 
-
+function timeoutPromise(delay) {
+	return new Promise(function (resolve, reject) {
+		setTimeout(function() {
+			reject("timeout")
+		}, delay);
+	});
+}
 
 
 
