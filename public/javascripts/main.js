@@ -34,19 +34,19 @@ $(document).ready(function() {
 	then(function onFulfilled(weatherObj) {
 		console.log("Weather Obj received!");
 		console.log(weatherObj);
+		/** Make all calls for what to do with the weather object **/
+		let nowWrapperInfo = {"id": "now-weather", "info": weatherObj.currently};
+		createNowDisplay(nowWrapperInfo);
+		let todaysWrapperInfo = {"id": "todays-weather", "info": weatherObj.daily.data[0]};
+		createTodaysDisplay(todaysWrapperInfo);
+		
+		
+		
+		
 	}).
 	catch(function (error) {
 		console.log(error);
 	});	
-	
-	
-	
-	
-	
-	
-
-
-	
 });
 
 
@@ -122,48 +122,18 @@ function queryDarkSkyAPI(weatherKey, lat, lon) {
 
 
 
-
-
-
-
-
-
-/**
- * Sends a request to the DarkSkyAPI is Position object is returned by getCurrentLocation() successfully
- * @params {Position} position
- * @return undefined
- * Calls queryDarkSkyAPI function
- */
-function sendPosition(position) { //If browser is able to get position from user, then send the request to Dark Sky API. Probably better to split this up. 
-    lat = position.coords.latitude; 
-    lon = position.coords.longitude;
-  queryDarkSkyAPI();
-  
-
-}
-/**
- * Error handler on geolocation if an error is returned by the getCurrentLocation method.
- * @params {PositionError} error
- * @return undefined
- * Sends request to Dark Sky API using default values
- */
-function errorPosition(error) {
-  locationNode.innerHTML = "An error occurred while trying to get users's location. Error code: " + error.code;
-  //For developer Use Only. Not production code. Use default values for lat and lon to get into from DarkSky
-  queryDarkSkyAPI();
-}
   /**
  * Takes the wrapper obj and looks up the  weather icon and places this HTML(SVG) in the .icon-holder div for it's id
  * @params {Object} obj
  * @return undefined
  *
  */
-    function addIcon(wrapperObj) {
-      var iconText = wrapperObj.info.icon;
-      var iconSVG = iconsMapObj[iconText]["svg"] === undefined ? "Insert Default SVG" : iconsMapObj[iconText]["svg"];
-      var iconHolder = document.querySelector("#" + wrapperObj.id + " " + ".icon-holder");
-      iconHolder.innerHTML = iconSVG;
-  }
+function addIcon(wrapperObj) {
+  var iconText = wrapperObj.info.icon;
+  var iconSVG = iconsMapObj[iconText]["svg"] === undefined ? "Insert Default SVG" : iconsMapObj[iconText]["svg"];
+  var iconHolder = document.querySelector("#" + wrapperObj.id + " " + ".icon-holder");
+  iconHolder.innerHTML = iconSVG;
+}
 /**
  * Displays the current day of the week and month above today's weather
  * @params {Object} obj, weather object
@@ -175,7 +145,7 @@ function errorPosition(error) {
     var todaysDateObj = new Date(time);
     var longTextDate = todaysDateObj.toDateString();
     var shortTextDate = (todaysDateObj.getMonth() + 1 + "") + "/" + (todaysDateObj.getDate() +  "");
-    var querySelectorString = "#" + wrapperObj.id + "> " + ".date-box";
+    var querySelectorString = `#${wrapperObj.id} .date-box`;
     var dateBox = document.querySelector(querySelectorString);
     if (wrapperObj.shortDate) {
       if (window.innerWidth < 1000) {
@@ -195,7 +165,7 @@ function errorPosition(error) {
   */
   function addWrapperBG(wrapperObj) {
     var backgroundColor = iconsMapObj[wrapperObj.info.icon].colors;
-    document.getElementById(wrapperObj.id).style.background = backgroundColor;
+    document.getElementsByTagName("main")[0].style.background = backgroundColor;
   }
 
 /**
@@ -217,9 +187,9 @@ function errorPosition(error) {
   function getAirTemp(wrapperObj) {
     var temp = wrapperObj.info.temperature;
     var fahrenheitTemp = Math.round(temp); //DarkSkyAPI defaults to Fahrenheit
-    var celsiusTemp = Math.round(convertToCelsius(temp))
-    document.querySelector("#" + wrapperObj.id + " " + ".fahrenheit" + " " + ".air-temp").innerHTML = fahrenheitTemp;
-    document.querySelector("#" + wrapperObj.id + " " + ".celsius" + " " + ".air-temp").innerHTML = celsiusTemp;
+    var celsiusTemp = Math.round(convertToCelsius(temp));
+    document.querySelector("#" + wrapperObj.id + " " + ".fahrenheit" + " " + ".air-temp").innerHTML = fahrenheitTemp + "&#176;" + "F";
+    document.querySelector("#" + wrapperObj.id + " " + ".celsius" + " " + ".air-temp").innerHTML = celsiusTemp + "&#176;" + "C";
   }
   /**
  * Gets the todays air temperature max and min for the current day of the location submitted at the time that the weather object was created on the Dark Sky API servers.
@@ -233,10 +203,10 @@ function errorPosition(error) {
     var tempMin = wrapperObj.info.temperatureMin;
     var tempMinFahrenheit = Math.round(tempMin);
     var tempMinCelsius = Math.round(convertToCelsius(tempMin));
-    document.querySelector("#" + wrapperObj.id + " " + ".fahrenheit" + " " + ".max-temp").innerHTML = tempMaxFahrenheit; 
-    document.querySelector("#" + wrapperObj.id + " " + ".fahrenheit" + " " + ".min-temp").innerHTML = tempMinFahrenheit; 
-    document.querySelector("#" + wrapperObj.id + " " + ".celsius" + " " + ".max-temp").innerHTML = tempMaxCelsius; 
-    document.querySelector("#" + wrapperObj.id + " " + ".celsius" + " " + ".min-temp").innerHTML = tempMinCelsius;  
+    document.querySelector("#" + wrapperObj.id + " " + ".fahrenheit" + " " + ".max-temp").innerHTML = tempMaxFahrenheit + "&#176;" + "F"; 
+    document.querySelector("#" + wrapperObj.id + " " + ".fahrenheit" + " " + ".min-temp").innerHTML = tempMinFahrenheit + "&#176;" + "F"; 
+    document.querySelector("#" + wrapperObj.id + " " + ".celsius" + " " + ".max-temp").innerHTML = tempMaxCelsius + "&#176;" + "C"; 
+    document.querySelector("#" + wrapperObj.id + " " + ".celsius" + " " + ".min-temp").innerHTML = tempMinCelsius + "&#176;" + "C";  
   }
   
    /**
@@ -264,10 +234,6 @@ function errorPosition(error) {
       getTempMaxAndMin(day);
       getPrecipPercentage(day);
     });
-  }
-  
-  function setBackground(iconText) {
-    document.body.style.background = iconsMapObj[iconText]["colors"];
   }
   
   function createNowDisplay(nowWrapperInfo) {
@@ -323,7 +289,7 @@ function errorPosition(error) {
      *
      *
      **/
-    document.querySelector(".nub").addEventListener("click", switchMeasure);
+//    document.querySelector(".nub").addEventListener("click", switchMeasure);
   
   function switchMeasure() {
     if (isFahrenheit) {//global state
