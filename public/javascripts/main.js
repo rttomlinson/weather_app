@@ -1,42 +1,55 @@
 "use strict";
 
 $(document).ready(function() {
-  var locationNode = document.getElementById("location");
-  var weatherKey = "da122a76ea01514b2d659d12db1b747c";
-  var lat = 35.6895; //Should keep these global for production?
-  var lon = 139.6917; //Tokyo lat/lon
-  var isFahrenheit = true; //Used by switch to toggle between temperature measurements.
-  getLocation();
-  var httpRequest = new XMLHttpRequest(); //Should keep this global as well?
-  httpRequest.onreadystatechange = function() { //change to onload
-    if (httpRequest.readyState === 4){
-      if (httpRequest.status === 200){
-        var weatherObj = JSON.parse(httpRequest.responseText); //Holds response from Dark Sky API. Right now scoped. Should this be global?
-        console.log(weatherObj); //Just to see the JSON structure
-        //Build objects to hold information for each respective wrapper
-        var nowWrapperInfo = {"id": "now-weather", "info": weatherObj.currently};
-        var todaysWrapperInfo = {"id": "todays-weather", "info": weatherObj.daily.data[0]};
-        var tomorrowsWrapperInfo = {"id": "tomorrows-weather", "info": weatherObj.daily.data[1]};
-        var firstForecast = {"id": "day-one-forecast", "info": weatherObj.daily.data[1], "shortDate" : true};
-        var secondForecast = {"id": "day-two-forecast", "info": weatherObj.daily.data[2], "shortDate": true};
-        var thirdForecast = {"id": "day-three-forecast", "info": weatherObj.daily.data[3], "shortDate": true};
-        var fourthForecast = {"id": "day-four-forecast", "info": weatherObj.daily.data[4], "shortDate": true};
-        var forecastWrapperInfo = [ firstForecast, secondForecast, thirdForecast, fourthForecast];
-        createFourDayForecast(forecastWrapperInfo);
-        createNowDisplay(nowWrapperInfo);
-        createTodaysDisplay(todaysWrapperInfo);
-        createTomorrowsDisplay(tomorrowsWrapperInfo);
-        getTimeOfWeatherInfo(weatherObj);
-        window.addEventListener("resize", function() {
-          forecastWrapperInfo.forEach(addDate);
-        })
+	console.log("ready function run");
+	var locationNode = document.getElementById("location");
+	var weatherKey = "da122a76ea01514b2d659d12db1b747c";
 
-      }
-      else {
-        console.log("An error occured while sending a request to Dark Sky's servers. Status code returned was " + httpRequest.status);
-      }
-    } //add else for "waiting..."
-  };  
+	var isFahrenheit = true; //Used by switch to toggle between temperature measurements.
+	
+	
+	
+	
+	let location = getLocation();//Attempt to get geolocation information. Returns a promise
+	location.then(function onFulfilled(position) { //Returns Position Object
+		let latitude = position.coords.latitude;
+		let longitude = position.coords.longitude;
+		console.log(`latitude: ${latitude}, longtitude: ${longitude}`);
+		return ([latitude, longitude]); //fulfill next promise with array of latitude and longitude
+		
+	}, function onRejected(error) {
+		//Need to ask user for latitude and longitude. Or zipcode? Alternate way to get lat and long
+		let latitude = 35.6895; //Used for testing
+		let longitude = 139.6917; //Tokyo lat/lon
+		console.log(error);
+		return ([latitude, longitude]);
+		
+	}).
+	then(function onFulfilled([latitude, longitude]) {
+		console.log("calling DarkSkyAPI");
+		return queryDarkSkyAPI(weatherKey, latitude, longitude); //Returns a promise with Query from DarkSkyAPI
+	}, function onRejected(error) {
+		throw "Something happened when trying to get coordinates";
+	}).
+	then(function onFulfilled(weatherObj) {
+		console.log("Weather Obj received!");
+		console.log(weatherObj);
+	}).
+	catch(function (error) {
+		console.log(error);
+	});	
+	
+	
+	
+	
+	
+	
+
+
+	
+});
+
+
 /**
  * Attempts to get user location using the getCurrentPosition method of the geolocation object
  * @params none
@@ -45,12 +58,76 @@ $(document).ready(function() {
  * Note from Google: Request is likely to fail on Chrome if not requested on https. Unknown about other browers. Google recommends assuming that user's will not give location.
  */
 function getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(sendPosition, errorPosition);
-    } else {
-        locationNode.innerHTML = "Geolocation is not supported by this browser.";
-    }
+	return new Promise(function (resolve, reject) {
+	    if (navigator.geolocation) {
+	      navigator.geolocation.getCurrentPosition(resolve, reject);
+	    } else {
+	        reject("Geolocation is not supported by this browser.");
+	    }
+	});
 }
+
+
+
+
+
+/**
+ * Sends a request to the Dark Sky API using the globally defined xmlhttprequest object
+ * @params none
+ * @return undefined
+ */
+function queryDarkSkyAPI(weatherKey, lat, lon) {
+	return new Promise(function (resolve, reject) {
+		let httpRequest = new XMLHttpRequest();
+	    httpRequest.open("GET", "https://crossorigin.me/https://api.darksky.net/forecast/" + weatherKey + "/" + lat + "," + lon, true);
+		httpRequest.onload = function() {
+	      if (httpRequest.status === 200){
+	        var weatherObj = JSON.parse(httpRequest.responseText); //Holds response from Dark Sky API. Right now scoped. Should this be global?
+	        resolve(weatherObj);
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        //Just to see the JSON structure
+	        //Build objects to hold information for each respective wrapper
+	        /*var nowWrapperInfo = {"id": "now-weather", "info": weatherObj.currently};
+	        var todaysWrapperInfo = {"id": "todays-weather", "info": weatherObj.daily.data[0]};
+	        var tomorrowsWrapperInfo = {"id": "tomorrows-weather", "info": weatherObj.daily.data[1]};
+	        var firstForecast = {"id": "day-one-forecast", "info": weatherObj.daily.data[1], "shortDate" : true};
+	        var secondForecast = {"id": "day-two-forecast", "info": weatherObj.daily.data[2], "shortDate": true};
+	        var thirdForecast = {"id": "day-three-forecast", "info": weatherObj.daily.data[3], "shortDate": true};
+	        var fourthForecast = {"id": "day-four-forecast", "info": weatherObj.daily.data[4], "shortDate": true};
+	        var forecastWrapperInfo = [ firstForecast, secondForecast, thirdForecast, fourthForecast];
+	        createFourDayForecast(forecastWrapperInfo);
+	        createNowDisplay(nowWrapperInfo);
+	        createTodaysDisplay(todaysWrapperInfo);
+	        createTomorrowsDisplay(tomorrowsWrapperInfo);
+	        getTimeOfWeatherInfo(weatherObj);
+	        window.addEventListener("resize", function() {
+	          forecastWrapperInfo.forEach(addDate);
+	        })
+			*/
+	      }
+	      else {
+	        reject("An error occured while sending a request to Dark Sky's servers. Status code returned was " + httpRequest.status);
+	      }
+	    };
+	    httpRequest.send(null);
+	});
+
+}
+
+
+
+
+
+
+
+
+
 /**
  * Sends a request to the DarkSkyAPI is Position object is returned by getCurrentLocation() successfully
  * @params {Position} position
@@ -75,15 +152,6 @@ function errorPosition(error) {
   //For developer Use Only. Not production code. Use default values for lat and lon to get into from DarkSky
   queryDarkSkyAPI();
 }
-/**
- * Sends a request to the Dark Sky API using the globally defined xmlhttprequest object
- * @params none
- * @return undefined
- */
-function queryDarkSkyAPI() {
-    httpRequest.open("GET", "https://crossorigin.me/https://api.darksky.net/forecast/" + weatherKey + "/" + lat + "," + lon, true);
-    httpRequest.send(null); 
-} 
   /**
  * Takes the wrapper obj and looks up the  weather icon and places this HTML(SVG) in the .icon-holder div for it's id
  * @params {Object} obj
@@ -559,8 +627,6 @@ function queryDarkSkyAPI() {
 </svg>`, "colors": "linear-gradient(to bottom, #555078 0%, #555078 20%, #9A97AE 20%, #9A97AE 40%, #736F90 40%, #736F90 60%, #3E3960 60%, #3E3960 80%, #29234F 80%, #29234F 100%)"}
 
   }
-  
-});
 
  /* -------Toggle in JS--------
   var tempsSlider = document.getElementById("temps-slider");
@@ -569,7 +635,6 @@ function queryDarkSkyAPI() {
 tempsSlider.classList.toggle("temps-fahr"); //classList will not work in IE9. Need a workaround using className property
 });
   ----End Toggle button in JS */ 
-  
 
 
 

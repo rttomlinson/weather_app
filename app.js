@@ -11,7 +11,7 @@ app.set('view engine', 'hbs');
 
 
 /** Set path for static files **/
-app.set(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get('/', function(req, res) {
@@ -37,6 +37,6 @@ app.use(function (err, req, res, next) {
 
 
 
-app.listen(8080, function() {
+app.listen(process.env.port || 8080, function() {
     console.log('listening on port 8080');
 });
