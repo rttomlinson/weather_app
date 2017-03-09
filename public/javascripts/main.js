@@ -1,13 +1,15 @@
 "use strict";
 
+var isFahrenheit = true; //Used by switch to toggle between temperature measurements.
+
+
 $(document).ready(function() {
 	console.log("ready function run");
 	var locationNode = document.getElementById("location");
 	var weatherKey = "da122a76ea01514b2d659d12db1b747c";
 
-	var isFahrenheit = true; //Used by switch to toggle between temperature measurements.
-	
-	
+	attachButtonListeners();
+	addTempSwitchListener();
 	
 	
 	let location = getLocation();//Attempt to get geolocation information. Returns a promise
@@ -42,7 +44,12 @@ $(document).ready(function() {
 		createTodaysDisplay(todaysWrapperInfo);
 		let tomorrowsWrapperInfo = {"id": "tomorrows-weather", "info": weatherObj.daily.data[1]};
 		createTomorrowsDisplay(tomorrowsWrapperInfo);
-
+		let firstForecast = {"id": "day-one-forecast", "info": weatherObj.daily.data[1], "shortDate" : true};
+        let secondForecast = {"id": "day-two-forecast", "info": weatherObj.daily.data[2], "shortDate": true};
+        let thirdForecast = {"id": "day-three-forecast", "info": weatherObj.daily.data[3], "shortDate": true};
+        let fourthForecast = {"id": "day-four-forecast", "info": weatherObj.daily.data[4], "shortDate": true};
+        let forecastWrapperInfo = [ firstForecast, secondForecast, thirdForecast, fourthForecast];
+	    createFourDayForecast(forecastWrapperInfo);
 		
 		
 		
@@ -274,6 +281,7 @@ function addIcon(wrapperObj) {
   /*Add click event listeners to display-buttons
   *
   */
+function attachButtonListeners() {
   document.getElementById("weather-display-buttons").addEventListener("click", function(event) {
   	if (event.target.tagName === 'BUTTON') {
   		let buttons = Array.from(event.currentTarget.querySelectorAll('button')); //For each button, remove the active-button class
@@ -296,7 +304,7 @@ function addIcon(wrapperObj) {
 	//Relies on display and buttons divs staying in the same order. Very brittle. Need to change.   
   }, false); 
 
-
+}
 
 
 
@@ -306,29 +314,30 @@ function addIcon(wrapperObj) {
      *
      *
      **/
-//    document.querySelector(".nub").addEventListener("click", switchMeasure);
+function addTempSwitchListener() {
+	  document.querySelector(".slider").addEventListener("click", switchMeasure);
+}
   
-  function switchMeasure() {
-    if (isFahrenheit) {//global state
-      document.querySelectorAll(".fahrenheit").forEach(function(element) {
-        element.classList.remove("active-weather");
-      });
-      document.querySelectorAll(".celsius").forEach(function(element) {
-        element.classList.add("active-weather");
-      });
-      this.textContent = "C";
-    }
-    else {
-       document.querySelectorAll(".celsius").forEach(function(element) {
-        element.classList.remove("active-weather");
-      });
-      document.querySelectorAll(".fahrenheit").forEach(function(element) {
-        element.classList.add("active-weather");
-      });
-      this.textContent = "F";
-    }
-    isFahrenheit = !isFahrenheit;
-  }
+function switchMeasure() {
+	console.log("handler called");
+	if (isFahrenheit) {//global state
+	  document.querySelectorAll(".fahrenheit").forEach(function(element) {
+	    element.classList.remove("active-block");
+	  });
+	  document.querySelectorAll(".celsius").forEach(function(element) {
+	    element.classList.add("active-block");
+	  });
+	}
+	else {
+	   document.querySelectorAll(".celsius").forEach(function(element) {
+	    element.classList.remove("active-block");
+	  });
+	  document.querySelectorAll(".fahrenheit").forEach(function(element) {
+	    element.classList.add("active-block");
+	  });
+	}
+	isFahrenheit = !isFahrenheit;
+}
 
 
 

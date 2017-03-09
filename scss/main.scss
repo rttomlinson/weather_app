@@ -12,13 +12,27 @@ svg {
     height: 75vh;
 }
 .weather-holder{
-    display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
-    display:none;
 }
+
+/** Classes to hide initially unless in active state **/
+.weather-holder, .fahrenheit, .celsius {
+    display: none;
+}
+
+
+#temp-switch {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
+
+
+
 .icon-holder {
     width: 20%;
     height: auto;
@@ -30,9 +44,17 @@ svg {
     width: 50%;
 }
 
+
+/** Classes for toggling display **/
 .active {
-    display: initial;
+    display: flex;
 }
+
+.active-block {
+    display: block;
+}
+
+
 
 .temps {
     display:flex;
@@ -44,6 +66,10 @@ svg {
     background-color: #ffeeaa;
 }
 
+
+.forecasts-wrapper {
+    display:flex;
+}
 
 
 
