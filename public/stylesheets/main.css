@@ -1,35 +1,66 @@
+/** CSS Reset is from Bootstrap **/
+body {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative; }
+
 svg {
   width: 100%;
-  height: auto; }
-
-.info-holders-box {
-  font-size: 36px; }
+  height: 100%; }
 
 .weather-display {
   height: 75vh; }
 
 .weather-holder {
-  flex-direction: column;
+  display: flex;
   justify-content: center;
-  align-items: center;
   height: 100%; }
 
-/** Classes to hide initially unless in active state **/
-.weather-holder, .fahrenheit, .celsius {
-  display: none; }
+.weather-contents-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-top: 25vh;
+  min-width: 100px; }
 
+/** Position switch at top-left corner **/
 #temp-switch {
   position: absolute;
   left: 10px;
   top: 10px; }
 
-.icon-holder {
-  width: 20%;
-  height: auto;
-  max-width: 150px;
-  min-width: 75px; }
+.temps {
+  text-align: center; }
+  .temps div {
+    display: inline-block; }
 
-#weather-display-buttons > button {
+.forecasts-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%; }
+
+.forecast-holder {
+  width: 50%; }
+
+.info-holders-box {
+  font-size: 16px; }
+
+.icon-holder {
+  height: 25%;
+  max-width: 150px;
+  margin: 15px 0; }
+
+.forecast-holder .info-holder-box {
+  font-size: 12px; }
+
+.forecast-holder .icon-holder {
+  height: 10%; }
+
+/** Classes to hide initially unless in active state **/
+.weather-holder, .fahrenheit, .celsius {
+  display: none; }
+
+/** Styling for buttons **/
+#weather-display-buttons button {
   display: inline-block;
   width: 50%; }
 
@@ -40,16 +71,9 @@ svg {
 .active-block {
   display: block; }
 
-.temps {
-  display: flex;
-  justify-content: space-between; }
-
 /** For the buttons that toggle different displays **/
 .active-button {
   background-color: #ffeeaa; }
-
-.forecasts-wrapper {
-  display: flex; }
 
 /****** SLIDER CSS **********************/
 /* The switch - the box around the slider */
@@ -96,3 +120,15 @@ input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px); }
+
+/** Media Queries **/
+@media screen and (min-width: 600px) {
+  body {
+    border: 3px solid black; }
+  .forecasts-wrapper {
+    flex-wrap: nowrap;
+    margin-top: 25vh; }
+  .forecast-holder .info-holder-box {
+    font-size: 16px; }
+  .forecast-holder .icon-holder {
+    height: 25vh; } }
