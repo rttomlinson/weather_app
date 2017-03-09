@@ -13,8 +13,7 @@ svg {
 
 .weather-holder {
   display: flex;
-  justify-content: center;
-  height: 100%; }
+  justify-content: center; }
 
 .weather-contents-wrapper {
   display: flex;
@@ -42,18 +41,19 @@ svg {
   width: 50%; }
 
 .info-holders-box {
-  font-size: 16px; }
+  font-size: 16px;
+  display: inline-block;
+  margin: 0 auto; }
 
 .icon-holder {
-  height: 25%;
+  height: 60px;
   max-width: 150px;
-  margin: 15px 0; }
+  margin: 15px 0;
+  width: 100%;
+  display: inline-block; }
 
 .forecast-holder .info-holder-box {
   font-size: 12px; }
-
-.forecast-holder .icon-holder {
-  height: 10%; }
 
 /** Classes to hide initially unless in active state **/
 .weather-holder, .fahrenheit, .celsius {
@@ -129,6 +129,4 @@ input:checked + .slider:before {
     flex-wrap: nowrap;
     margin-top: 25vh; }
   .forecast-holder .info-holder-box {
-    font-size: 16px; }
-  .forecast-holder .icon-holder {
-    height: 25vh; } }
+    font-size: 16px; } }

@@ -21,7 +21,6 @@ svg {
 .weather-holder{
     @include flex-centered();
     justify-content: center;
-    height: 100%;
 }
 
 .weather-contents-wrapper {
@@ -53,18 +52,19 @@ svg {
 
 .info-holders-box {
     font-size: 16px;
+    display: inline-block;
+    margin: 0 auto;
 }
 .icon-holder {
-    height: 25%;
+    height: 60px;
     max-width: 150px;
     margin: 15px 0;
+    width: 100%;
+    display: inline-block;
 }
 .forecast-holder {
         .info-holder-box {
             font-size: 12px;
-        }
-        .icon-holder {
-            height: 10%;
         }
                 
     }
@@ -168,7 +168,6 @@ input:checked + .slider:before {
             font-size: 16px;
         }
         .icon-holder {
-            height: 25vh;
         }
                 
     }
