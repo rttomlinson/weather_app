@@ -2,7 +2,7 @@ $awesome: #ffffff;
 
 /** CSS Reset is from Bootstrap **/
 
-@mixin flex-centered() {
+@mixin flex() {
     display: flex;
 }
 body {
@@ -19,12 +19,12 @@ svg {
     height: 75vh;
 }
 .weather-holder{
-    @include flex-centered();
+    @include flex();
     justify-content: center;
 }
 
 .weather-contents-wrapper {
-    @include flex-centered();
+    @include flex();
     flex-direction: column;
     margin-top: 25vh;
     min-width: 100px;
@@ -35,6 +35,8 @@ svg {
     left: 10px;
     top: 10px;
 }
+
+
 .temps {
     text-align: center;
     div {
@@ -42,7 +44,7 @@ svg {
     }
 }
 .forecasts-wrapper {
-    display:flex;
+    @include flex();
     flex-wrap: wrap;
     width: 100%;
 }
@@ -166,8 +168,6 @@ input:checked + .slider:before {
     .forecast-holder {
         .info-holder-box {
             font-size: 16px;
-        }
-        .icon-holder {
         }
                 
     }

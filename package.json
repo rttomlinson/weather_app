@@ -7,6 +7,7 @@
     "build-css": "./bin/build-css",
     "watch-css": "./bin/watch-css",
     "start": "npm run build-css && node ./bin/www",
+    "debug": "npm run build-css && DEBUG=weather_app:* node ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,9 +26,12 @@
   "homepage": "https://github.com/rttomlinson/weather_app#readme",
   "devDependencies": {
     "jasmine": "^2.5.3",
+    "jasmine-ajax": "^3.3.1",
     "node-sass": "^4.5.0"
   },
   "dependencies": {
+    "body-parser": "^1.17.1",
+    "debug": "^2.6.1",
     "express": "^4.15.2",
     "hbs": "^4.0.1"
   }
