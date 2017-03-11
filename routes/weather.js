@@ -4,7 +4,7 @@ let express = require('express');
 let router = express.Router();
 
 let darkSky = require('../darkskyapi.js');
-let {darkSkyKey} = require('../keys/darkSkyKey');
+let darkSkyKey = process.env.DARK_SKY_API_KEY; //Set environment variable for your API Key
 
 
 
