@@ -3,6 +3,10 @@
   "version": "1.0.1",
   "description": "A weather app",
   "main": "app.js",
+  "engines" : {
+    "node" : "7.6.0",
+    "npm" : "4.1.2"
+  },
   "scripts": {
     "build-css": "./bin/build-css",
     "watch-css": "./bin/watch-css",
