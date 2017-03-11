@@ -1,8 +1,13 @@
 # weather_app
 
-ToDo, figure out how to get the Request to wait until we get coordinates back. <---Organize this
+[Working demo hosted on Heroku](https://minimal-weather-app.herokuapp.com/)
 
+If copying these files, you will need to acquire an API key from Dark Sky and create a directory 'keys' in the root directory with 
+a json file named darkSkyKey and have your API key the value of a property named "darkSkyKey".
+Example:
+{
+    "darkSkyKey": "[Your key here]"
+}
 
-Concepts covered, CORS, JSONP, CORS with Proxy server. Currently using a proxy server or CORS request because No "Access-Control-Allow-Origin" header is present. I guess the Dark Sky servers didn't add it? Or my Origin Header wasn't added. HTTPS and "non-secured" . Events and Event Handlers. XMLHttpRequests in vanilla Javascript and jQuery.
 
 Currently using inline svg. May considering moving to an external file.
